@@ -136,7 +136,7 @@ fun RegisterBackground(navController: NavController) {
                     password.text.trim(),
                     confirmpass.text.trim()
                 )
-            navController.navigate(ROUTE_ABOUT)
+//            navController.navigate(ROUTE_ABOUT)
             },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(Color.Cyan)) {

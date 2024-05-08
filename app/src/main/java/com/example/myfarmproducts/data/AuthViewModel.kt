@@ -46,13 +46,14 @@ class AuthViewModel(
         } else {
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    val userdata = Users(email, password, mAuth.currentUser!!.uid)
-                    val regRef = FirebaseDatabase.getInstance().getReference().child("Users/" + mAuth.currentUser!!.uid)
+                    val userid = System.currentTimeMillis().toString()
+                    val userdata = Users(email, password, userid)
+                    val regRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userid)
                     regRef.setValue(userdata).addOnCompleteListener {
                         if (it.isSuccessful) {
                             progress.dismiss()
                             Toast.makeText(context, "Registered Successfully", Toast.LENGTH_LONG).show()
-                            navController.navigate(ROUTE_HOME)
+                            navController.navigate("$ROUTE_ABOUT/$userid")
                         } else {
                             progress.dismiss()
                             Toast.makeText(context, "${it.exception!!.message}", Toast.LENGTH_LONG)
@@ -70,8 +71,9 @@ class AuthViewModel(
     }
 
 
-    fun login(email: String,
-              pass: String,
+    fun login(
+        email: String,
+        pass: String,
     ){
         progress.show()
         var userid = System.currentTimeMillis().toString()
